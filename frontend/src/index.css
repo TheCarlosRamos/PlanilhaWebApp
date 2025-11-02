@@ -1,0 +1,97 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply focus:outline-none;
+  }
+  
+  body {
+    @apply bg-gray-50 text-ppi-dark antialiased;
+  }
+  
+  /* Melhoria de acessibilidade - foco visível */
+  *:focus-visible {
+    @apply outline-none ring-2 ring-ppi-accent ring-offset-2;
+  }
+  
+  /* Scrollbar estilizada */
+  ::-webkit-scrollbar {
+    @apply w-2 h-2;
+  }
+  
+  ::-webkit-scrollbar-track {
+    @apply bg-gray-100;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    @apply bg-gray-300 rounded-full;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-gray-400;
+  }
+}
+
+@layer components {
+  /* Card governamental */
+  .gov-card {
+    @apply bg-white rounded-lg shadow-gov border border-gray-200;
+  }
+  
+  /* Botões governamentais */
+  .gov-button {
+    @apply px-4 py-2 rounded-md font-medium transition-all duration-200;
+  }
+  
+  .gov-button-primary {
+    @apply gov-button bg-ppi-blue text-white hover:bg-ppi-dark focus-visible:ring-2 focus-visible:ring-ppi-blue focus-visible:ring-offset-2;
+  }
+  
+  .gov-button-secondary {
+    @apply gov-button bg-white text-ppi-blue border border-ppi-blue hover:bg-ppi-blue-light focus-visible:ring-2 focus-visible:ring-ppi-blue;
+  }
+  
+  .gov-button-ghost {
+    @apply gov-button bg-transparent text-ppi-blue hover:bg-ppi-blue-light focus-visible:ring-2 focus-visible:ring-ppi-blue;
+  }
+  
+  /* Inputs governamentais */
+  .gov-input {
+    @apply w-full px-3 py-2 border border-gray-300 rounded-md bg-white text-ppi-dark placeholder-gray-400 transition-colors;
+    @apply focus-visible:border-ppi-blue focus-visible:ring-2 focus-visible:ring-ppi-blue focus-visible:ring-offset-0;
+  }
+  
+  /* Badge governamental */
+  .gov-badge {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold;
+  }
+  
+  .gov-badge-primary {
+    @apply gov-badge bg-ppi-blue-light text-ppi-blue;
+  }
+  
+  .gov-badge-success {
+    @apply gov-badge bg-green-100 text-green-700;
+  }
+  
+  .gov-badge-warning {
+    @apply gov-badge bg-yellow-100 text-ppi-warning;
+  }
+  
+  /* Link governamental */
+  .gov-link {
+    @apply text-ppi-blue hover:text-ppi-dark underline decoration-transparent hover:decoration-current transition-all;
+  }
+  
+  /* Tabela governamental - linhas zebradas */
+  .gov-table-row {
+    @apply hover:bg-ppi-blue-light transition-colors;
+  }
+  
+  .gov-table-row-striped:nth-child(even) {
+    @apply bg-gray-50;
+  }
+}
+
