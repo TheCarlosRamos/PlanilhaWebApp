@@ -23,8 +23,10 @@ def get_db():
     finally:
         db_session.close()
 
-UPLOAD_DIR = os.getenv('UPLOAD_DIR','/tmp/uploads')
+# Create uploads directory in the project root
+UPLOAD_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'uploads'))
 os.makedirs(UPLOAD_DIR, exist_ok=True)
+print(f"Upload directory set to: {UPLOAD_DIR}")  # For debugging
 
 @app.post('/upload')
 async def upload_excel(file: UploadFile = File(...), database: Session = Depends(get_db)):

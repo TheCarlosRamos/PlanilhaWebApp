@@ -1,10 +1,19 @@
 .PHONY: help up down restart logs clean build open-frontend open-backend test
 
-# Cores para output
-GREEN  := $(shell tput -Txterm setaf 2)
-YELLOW := $(shell tput -Txterm setaf 3)
-WHITE  := $(shell tput -Txterm setaf 7)
-RESET  := $(shell tput -Txterm sgr0)
+# Cores para output (desativadas no Windows)
+ifdef SystemRoot
+    # Windows
+    GREEN  :=
+    YELLOW :=
+    WHITE  :=
+    RESET  :=
+else
+    # Unix/Linux
+    GREEN  := $(shell tput -Txterm setaf 2)
+    YELLOW := $(shell tput -Txterm setaf 3)
+    WHITE  := $(shell tput -Txterm setaf 7)
+    RESET  := $(shell tput -Txterm sgr0)
+endif
 
 # Variáveis
 FRONTEND_URL := http://localhost:3000
@@ -20,16 +29,16 @@ help: ## Mostra esta mensagem de ajuda
 ##@ Execução
 
 up: ## Inicia todos os serviços (database, backend, frontend)
-	@echo '${GREEN}Iniciando serviços...${RESET}'
+	@echo Iniciando serviços...
 	docker-compose up --build -d
-	@echo '${YELLOW}Aguardando serviços ficarem prontos...${RESET}'
-	@./wait-for-services.sh || echo 'Serviços podem ainda estar iniciando. Use "make logs" para verificar.'
-	@echo '${GREEN}✓ Serviços iniciados!${RESET}'
-	@echo '${YELLOW}Frontend:${RESET} ${FRONTEND_URL}'
-	@echo '${YELLOW}Backend:${RESET} ${BACKEND_URL}'
-	@echo '${GREEN}Abrindo frontend no navegador...${RESET}'
-	@sleep 2
-	@xdg-open $(FRONTEND_URL) 2>/dev/null || open $(FRONTEND_URL) 2>/dev/null || start $(FRONTEND_URL) 2>/dev/null || echo "Por favor, abra manualmente: $(FRONTEND_URL)"
+	@echo Aguardando serviços ficarem prontos...
+	@echo (Isso pode levar alguns segundos...)
+	@timeout /t 10 /nobreak >nul
+	@echo Serviços podem ainda estar iniciando. Use "make logs" para verificar.
+	@echo Frontend: ${FRONTEND_URL}
+	@echo Backend: ${BACKEND_URL}
+	@echo Abrindo frontend no navegador...
+	@start ${FRONTEND_URL} 2>nul || echo Por favor, abra manualmente: ${FRONTEND_URL}
 
 down: ## Para todos os serviços
 	@echo '${GREEN}Parando serviços...${RESET}'

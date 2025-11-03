@@ -27,17 +27,22 @@ function TruncatedText({ text, maxLength = 150 }) {
 function ExpandableCell({ content, isOpen, onToggle }) {
   return (
     <td className="px-4 py-3 text-sm">
-      <button
-        onClick={onToggle}
-        className="flex items-center space-x-2 text-left hover:text-ppi-blue transition-colors focus-visible:ring-2 focus-visible:ring-ppi-accent rounded"
-      >
-        {isOpen ? (
-          <ChevronDown className="w-4 h-4 flex-shrink-0 text-ppi-blue" />
-        ) : (
-          <ChevronRight className="w-4 h-4 flex-shrink-0 text-ppi-blue" />
-        )}
-        <TruncatedText text={content} maxLength={50} />
-      </button>
+      <div className="flex items-start space-x-2">
+        <button
+          onClick={onToggle}
+          className="flex-shrink-0 hover:text-ppi-blue transition-colors focus-visible:ring-2 focus-visible:ring-ppi-accent rounded"
+          aria-label={isOpen ? 'Recolher' : 'Expandir'}
+        >
+          {isOpen ? (
+            <ChevronDown className="w-4 h-4 text-ppi-blue" />
+          ) : (
+            <ChevronRight className="w-4 h-4 text-ppi-blue" />
+          )}
+        </button>
+        <div className="flex-1">
+          <TruncatedText text={content} maxLength={50} />
+        </div>
+      </div>
     </td>
   );
 }

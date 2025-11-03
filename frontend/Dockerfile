@@ -1,8 +1,18 @@
 FROM node:20-alpine
+
 WORKDIR /app
-COPY package.json /app/package.json
+
+# Copy package files
+COPY package*.json ./
+
+# Install dependencies
 RUN npm install
-COPY ./src /app/src
-COPY index.html /app/
-COPY vite.config.js /app/
-CMD ["npm", "run", "start"]
+
+# Copy the rest of the application
+COPY . .
+
+# Expose port 3000 for Vite dev server
+EXPOSE 3000
+
+# Start the development server
+CMD ["npm", "run", "dev"]

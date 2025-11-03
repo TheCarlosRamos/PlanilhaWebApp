@@ -3,17 +3,25 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --primary: 29, 78, 216;    /* Blue-700 */
+    --primary-light: 239, 246, 255; /* Blue-50 */
+    --secondary: 55, 65, 81;   /* Gray-700 */
+    --success: 22, 163, 74;    /* Green-600 */
+    --warning: 234, 179, 8;    /* Yellow-500 */
+    --danger: 220, 38, 38;     /* Red-600 */
+    --light: 249, 250, 251;    /* Gray-50 */
+    --dark: 17, 24, 39;        /* Gray-900 */
+    --muted: 107, 114, 128;    /* Gray-500 */
+  }
+
   * {
     @apply focus:outline-none;
   }
   
   body {
-    @apply bg-gray-50 text-ppi-dark antialiased;
-  }
-  
-  /* Melhoria de acessibilidade - foco visível */
-  *:focus-visible {
-    @apply outline-none ring-2 ring-ppi-accent ring-offset-2;
+    @apply bg-gray-50 text-gray-900 antialiased min-h-screen;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
   }
   
   /* Scrollbar estilizada */
@@ -35,63 +43,219 @@
 }
 
 @layer components {
-  /* Card governamental */
-  .gov-card {
-    @apply bg-white rounded-lg shadow-gov border border-gray-200;
+  /* Layout Components */
+  .app-container {
+    @apply min-h-screen flex flex-col;
   }
-  
-  /* Botões governamentais */
-  .gov-button {
-    @apply px-4 py-2 rounded-md font-medium transition-all duration-200;
+
+  .main-content {
+    @apply flex-1 p-6;
   }
-  
-  .gov-button-primary {
-    @apply gov-button bg-ppi-blue text-white hover:bg-ppi-dark focus-visible:ring-2 focus-visible:ring-ppi-blue focus-visible:ring-offset-2;
+
+  .page-header {
+    @apply flex flex-col md:flex-row md:items-center md:justify-between mb-6 gap-4;
   }
-  
-  .gov-button-secondary {
-    @apply gov-button bg-white text-ppi-blue border border-ppi-blue hover:bg-ppi-blue-light focus-visible:ring-2 focus-visible:ring-ppi-blue;
+
+  .page-title {
+    @apply text-2xl font-bold text-gray-900;
   }
-  
-  .gov-button-ghost {
-    @apply gov-button bg-transparent text-ppi-blue hover:bg-ppi-blue-light focus-visible:ring-2 focus-visible:ring-ppi-blue;
+
+  .page-description {
+    @apply text-gray-600 mt-1;
   }
-  
-  /* Inputs governamentais */
-  .gov-input {
-    @apply w-full px-3 py-2 border border-gray-300 rounded-md bg-white text-ppi-dark placeholder-gray-400 transition-colors;
-    @apply focus-visible:border-ppi-blue focus-visible:ring-2 focus-visible:ring-ppi-blue focus-visible:ring-offset-0;
+
+  /* Cards */
+  .card {
+    @apply bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden transition-all duration-200 hover:shadow-md;
   }
-  
-  /* Badge governamental */
-  .gov-badge {
-    @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold;
+
+  .card-header {
+    @apply px-6 py-4 border-b border-gray-100 flex items-center justify-between;
   }
-  
-  .gov-badge-primary {
-    @apply gov-badge bg-ppi-blue-light text-ppi-blue;
+
+  .card-title {
+    @apply text-lg font-semibold text-gray-900;
   }
-  
-  .gov-badge-success {
-    @apply gov-badge bg-green-100 text-green-700;
+
+  .card-body {
+    @apply p-6;
   }
-  
-  .gov-badge-warning {
-    @apply gov-badge bg-yellow-100 text-ppi-warning;
+
+  .card-footer {
+    @apply px-6 py-4 bg-gray-50 border-t border-gray-100 flex items-center justify-between;
   }
-  
-  /* Link governamental */
-  .gov-link {
-    @apply text-ppi-blue hover:text-ppi-dark underline decoration-transparent hover:decoration-current transition-all;
+
+  /* Stats Cards */
+  .stat-card {
+    @apply p-6 rounded-xl bg-white border border-gray-200 hover:shadow-md transition-shadow;
   }
-  
-  /* Tabela governamental - linhas zebradas */
-  .gov-table-row {
-    @apply hover:bg-ppi-blue-light transition-colors;
+
+  .stat-value {
+    @apply text-3xl font-bold text-gray-900 mb-1;
   }
-  
-  .gov-table-row-striped:nth-child(even) {
+
+  .stat-label {
+    @apply text-sm font-medium text-gray-500;
+  }
+
+  .stat-change {
+    @apply inline-flex items-center text-sm font-medium mt-2;
+  }
+
+  /* Buttons */
+  .btn {
+    @apply inline-flex items-center justify-center px-4 py-2 rounded-lg font-medium transition-all duration-200 focus:ring-2 focus:ring-offset-2 focus:ring-opacity-50;
+  }
+
+  .btn-primary {
+    @apply bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500;
+  }
+
+  .btn-secondary {
+    @apply bg-white text-gray-700 border border-gray-300 hover:bg-gray-50 focus:ring-gray-500;
+  }
+
+  .btn-success {
+    @apply bg-green-600 text-white hover:bg-green-700 focus:ring-green-500;
+  }
+
+  .btn-danger {
+    @apply bg-red-600 text-white hover:bg-red-700 focus:ring-red-500;
+  }
+
+  /* Forms */
+  .form-group {
+    @apply mb-4;
+  }
+
+  .form-label {
+    @apply block text-sm font-medium text-gray-700 mb-1;
+  }
+
+  .form-control {
+    @apply w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors;
+  }
+
+  .form-text {
+    @apply mt-1 text-sm text-gray-500;
+  }
+
+  /* Alerts */
+  .alert {
+    @apply p-4 rounded-lg mb-4;
+  }
+
+  .alert-success {
+    @apply bg-green-50 text-green-800 border border-green-200;
+  }
+
+  .alert-warning {
+    @apply bg-yellow-50 text-yellow-800 border border-yellow-200;
+  }
+
+  .alert-danger {
+    @apply bg-red-50 text-red-800 border border-red-200;
+  }
+
+  .alert-info {
+    @apply bg-blue-50 text-blue-800 border border-blue-200;
+  }
+
+  /* Badges */
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+
+  .badge-primary {
+    @apply bg-blue-100 text-blue-800;
+  }
+
+  .badge-success {
+    @apply bg-green-100 text-green-800;
+  }
+
+  .badge-warning {
+    @apply bg-yellow-100 text-yellow-800;
+  }
+
+  .badge-danger {
+    @apply bg-red-100 text-red-800;
+  }
+
+  /* Tables */
+  .table-container {
+    @apply overflow-x-auto rounded-lg border border-gray-200;
+  }
+
+  .table {
+    @apply min-w-full divide-y divide-gray-200;
+  }
+
+  .table thead {
     @apply bg-gray-50;
+  }
+
+  .table th {
+    @apply px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider;
+  }
+
+  .table tbody {
+    @apply bg-white divide-y divide-gray-200;
+  }
+
+  .table td {
+    @apply px-6 py-4 whitespace-nowrap text-sm text-gray-900;
+  }
+
+  .table-row-hover {
+    @apply hover:bg-gray-50 transition-colors;
+  }
+
+  /* Navigation */
+  .nav-link {
+    @apply flex items-center px-4 py-2 text-sm font-medium rounded-lg transition-colors;
+  }
+
+  .nav-link.active {
+    @apply bg-blue-50 text-blue-700;
+  }
+
+  .nav-link:not(.active) {
+    @apply text-gray-700 hover:bg-gray-100;
+  }
+
+  /* Utilities */
+  .divider {
+    @apply border-t border-gray-200 my-4;
+  }
+
+  .empty-state {
+    @apply text-center py-12 px-4;
+  }
+
+  .empty-state-icon {
+    @apply mx-auto h-12 w-12 text-gray-400;
+  }
+
+  .empty-state-title {
+    @apply mt-2 text-sm font-medium text-gray-900;
+  }
+
+  .empty-state-description {
+    @apply mt-1 text-sm text-gray-500;
+  }
+
+  /* Responsive adjustments */
+  @screen sm {
+    .main-content {
+      @apply px-8 py-8;
+    }
+  }
+
+  @screen lg {
+    .main-content {
+      @apply px-12;
+    }
   }
 }
 
